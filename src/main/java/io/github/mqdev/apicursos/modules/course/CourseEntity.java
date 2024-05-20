@@ -68,4 +68,18 @@ public class CourseEntity {
 
         return new CourseEntity(courseRequestDTO.name(), categoryEnum, statusEnum);
     }
+
+    public void update(CourseRequestDTO courseRequestDTO) {
+        if (courseRequestDTO.name() != null) {
+            this.name = courseRequestDTO.name();
+        }
+
+        if (courseRequestDTO.category() != null) {
+            try {
+                this.category = CourseCategoryEnum.valueOf(courseRequestDTO.category());
+            } catch (IllegalArgumentException | NullPointerException e) {
+                throw new IllegalArgumentException("Invalid category");
+            }
+        }
+    }
 }
