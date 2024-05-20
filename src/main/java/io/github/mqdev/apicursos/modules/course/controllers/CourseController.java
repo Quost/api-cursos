@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.github.mqdev.apicursos.modules.course.dto.CourseRequestDTO;
+import io.github.mqdev.apicursos.modules.course.useCases.ChangeCourseStatusUseCase;
 import io.github.mqdev.apicursos.modules.course.useCases.CreateCourseUseCase;
 import io.github.mqdev.apicursos.modules.course.useCases.DeleteCourseUseCase;
 import io.github.mqdev.apicursos.modules.course.useCases.ListAllCoursesUseCase;
@@ -17,6 +18,7 @@ import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -35,6 +37,9 @@ public class CourseController {
 
     @Autowired
     private DeleteCourseUseCase deleteCourseUseCase;
+
+    @Autowired
+    private ChangeCourseStatusUseCase changeCourseStatusUseCase;
 
     @PostMapping
     public ResponseEntity<Object> createCourse(@Valid @RequestBody CourseRequestDTO course) {
@@ -73,6 +78,16 @@ public class CourseController {
         try {
             this.deleteCourseUseCase.execute(id);
             return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PatchMapping("/{id}/active")
+    public ResponseEntity<Object> changeCourseStatus(@PathVariable("id") String id, @RequestParam(required = false) String active) {
+        try {
+            var result = this.changeCourseStatusUseCase.execute(id, active);
+            return ResponseEntity.ok(result);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

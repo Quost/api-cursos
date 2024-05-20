@@ -82,4 +82,16 @@ public class CourseEntity {
             }
         }
     }
+
+    public void setStatus(String status) {
+        if (status != null) {
+            try {
+                this.active = CourseStatusEnum.valueOf(status);
+            } catch (IllegalArgumentException | NullPointerException e) {
+                throw new IllegalArgumentException("Invalid status");
+            }
+        } else {
+            this.active = this.active == CourseStatusEnum.ACTIVE ? CourseStatusEnum.INACTIVE : CourseStatusEnum.ACTIVE;
+        }
+    }
 }
