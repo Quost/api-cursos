@@ -1,10 +1,13 @@
 package io.github.mqdev.apicursos.modules.course;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
 import java.time.LocalDateTime;
@@ -27,10 +30,12 @@ public class CourseEntity {
     @NotBlank(message = "Name is required")    
     private String name;
 
-    @NotBlank(message = "Description is required")
+    @NotNull(message = "Category is required")
+    @Enumerated(EnumType.STRING)
     private CategoryEnum category;
 
-    private StatusEnum active;
+    @Enumerated(EnumType.STRING)
+    private StatusEnum active = StatusEnum.ACTIVE;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
