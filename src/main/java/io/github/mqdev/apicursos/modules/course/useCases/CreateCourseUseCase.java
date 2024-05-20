@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import io.github.mqdev.apicursos.exceptions.CourseAlreadyExistsException;
 import io.github.mqdev.apicursos.modules.course.CourseEntity;
 import io.github.mqdev.apicursos.modules.course.CourseRepository;
-import io.github.mqdev.apicursos.modules.course.enums.CategoryEnum;
 
 @Service
 public class CreateCourseUseCase {
