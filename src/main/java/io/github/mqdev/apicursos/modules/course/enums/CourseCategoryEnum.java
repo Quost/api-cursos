@@ -1,5 +1,5 @@
 package io.github.mqdev.apicursos.modules.course.enums;
 
-public enum CategoryEnum {
+public enum CourseCategoryEnum {
     PROGRAMMING, DESIGN, MARKETING, BUSINESS, MANAGEMENT
 }
