@@ -15,8 +15,8 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import io.github.mqdev.apicursos.modules.course.enums.CategoryEnum;
-import io.github.mqdev.apicursos.modules.course.enums.StatusEnum;
+import io.github.mqdev.apicursos.modules.course.enums.CourseCategoryEnum;
+import io.github.mqdev.apicursos.modules.course.enums.CourseStatusEnum;
 import lombok.Data;
 
 @Data
@@ -32,10 +32,10 @@ public class CourseEntity {
 
     @NotNull(message = "Category is required")
     @Enumerated(EnumType.STRING)
-    private CategoryEnum category;
+    private CourseCategoryEnum category;
 
     @Enumerated(EnumType.STRING)
-    private StatusEnum active = StatusEnum.ACTIVE;
+    private CourseStatusEnum active = CourseStatusEnum.ACTIVE;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
