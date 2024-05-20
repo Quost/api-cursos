@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.github.mqdev.apicursos.modules.course.CourseEntity;
+import io.github.mqdev.apicursos.modules.course.dto.CourseRequestDTO;
 import io.github.mqdev.apicursos.modules.course.useCases.CreateCourseUseCase;
 import io.github.mqdev.apicursos.modules.course.useCases.ListAllCoursesUseCase;
 import jakarta.validation.Valid;
@@ -26,7 +27,7 @@ public class CourseController {
     private ListAllCoursesUseCase listAllCoursesUseCase;
     
     @PostMapping
-    public ResponseEntity<Object> createCourse(@Valid @RequestBody CourseEntity course) {
+    public ResponseEntity<Object> createCourse(@Valid @RequestBody CourseRequestDTO course) {
         try {
             var result = this.createCourseUseCase.execute(course);
             return ResponseEntity.ok(result);
