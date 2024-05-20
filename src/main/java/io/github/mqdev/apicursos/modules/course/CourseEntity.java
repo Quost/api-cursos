@@ -18,10 +18,14 @@ import org.hibernate.annotations.UpdateTimestamp;
 import io.github.mqdev.apicursos.modules.course.dto.CourseRequestDTO;
 import io.github.mqdev.apicursos.modules.course.enums.CourseCategoryEnum;
 import io.github.mqdev.apicursos.modules.course.enums.CourseStatusEnum;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity(name = "course")
+@AllArgsConstructor
+@NoArgsConstructor
 public class CourseEntity {
 
     @Id
@@ -60,11 +64,7 @@ public class CourseEntity {
             throw new IllegalArgumentException("Invalid category");
         }
 
-        try {
-            statusEnum = CourseStatusEnum.valueOf(courseRequestDTO.status());
-        } catch (IllegalArgumentException | NullPointerException e) {
-            statusEnum = CourseStatusEnum.ACTIVE;
-        }
+        statusEnum = CourseStatusEnum.INACTIVE;
 
         return new CourseEntity(courseRequestDTO.name(), categoryEnum, statusEnum);
     }

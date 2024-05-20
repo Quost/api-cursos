@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.github.mqdev.apicursos.modules.course.CourseEntity;
 import io.github.mqdev.apicursos.modules.course.dto.CourseRequestDTO;
 import io.github.mqdev.apicursos.modules.course.useCases.CreateCourseUseCase;
 import io.github.mqdev.apicursos.modules.course.useCases.ListAllCoursesUseCase;
@@ -36,8 +35,7 @@ public class CourseController {
         }
     }
 
-    // This method will list all courses
-    // It`s optional to filter by name or category
+
     @GetMapping
     public ResponseEntity<Object> listCourses(@RequestParam(required = false) String name, @RequestParam(required = false) String category) {
         try {
