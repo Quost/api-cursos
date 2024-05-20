@@ -18,7 +18,7 @@ public class CourseController {
     @Autowired
     private CreateCourseUseCase createCourseUseCase;
     
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<Object> createCourse(@Valid @RequestBody CourseEntity course) {
         try {
             var result = this.createCourseUseCase.execute(course);
