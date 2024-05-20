@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import io.github.mqdev.apicursos.modules.course.enums.Category;
-import io.github.mqdev.apicursos.modules.course.enums.Status;
+import io.github.mqdev.apicursos.modules.course.enums.CategoryEnum;
+import io.github.mqdev.apicursos.modules.course.enums.StatusEnum;
 import lombok.Data;
 
 @Data
@@ -28,9 +28,9 @@ public class CourseEntity {
     private String name;
 
     @NotBlank(message = "Description is required")
-    private Category category;
+    private CategoryEnum category;
 
-    private Status active;
+    private StatusEnum active;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
