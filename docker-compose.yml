@@ -17,7 +17,7 @@ services:
       POSTGRES_PASSWORD: root_api_cursos
       POSTGRES_DB: api_cursos
     ports:
-      - "5433:5432"
+      - "5433:5433"
   prometheus:
     container_name: api_cursos_prometheus
     image: prom/prometheus:latest
@@ -27,11 +27,11 @@ services:
     networks:
       - gv-network
     ports:
-      - 9090:9090
+      - 9091:9091
   grafana:
     container_name: api_cursos_grafana
     image: grafana/grafana:latest
     networks:
       - gv-network
     ports:
-      - 3000:3000
+      - 3001:3001
