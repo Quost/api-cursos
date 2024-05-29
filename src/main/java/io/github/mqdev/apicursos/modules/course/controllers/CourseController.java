@@ -2,6 +2,7 @@ package io.github.mqdev.apicursos.modules.course.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,6 +43,7 @@ public class CourseController {
     private ChangeCourseStatusUseCase changeCourseStatusUseCase;
 
     @PostMapping
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<Object> createCourse(@Valid @RequestBody CourseRequestDTO course) {
         try {
             var result = this.createCourseUseCase.execute(course);
@@ -52,6 +54,7 @@ public class CourseController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<Object> listCourses(@RequestParam(required = false) String name,
             @RequestParam(required = false) String category) {
         try {
@@ -63,6 +66,7 @@ public class CourseController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<Object> updateCourse(@PathVariable("id") String id,
             @Valid @RequestBody CourseRequestDTO course) {
         try {
@@ -74,6 +78,7 @@ public class CourseController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<Object> deleteCourse(@PathVariable("id") String id) {
         try {
             this.deleteCourseUseCase.execute(id);
@@ -84,6 +89,7 @@ public class CourseController {
     }
 
     @PatchMapping("/{id}/active")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<Object> changeCourseStatus(@PathVariable("id") String id, @RequestParam(required = false) String active) {
         try {
             var result = this.changeCourseStatusUseCase.execute(id, active);
