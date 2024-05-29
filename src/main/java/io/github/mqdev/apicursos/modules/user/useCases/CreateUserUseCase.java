@@ -5,8 +5,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import io.github.mqdev.apicursos.exceptions.UserAlreadyExistsException;
-import io.github.mqdev.apicursos.modules.user.entities.UserEntity;
-import io.github.mqdev.apicursos.modules.user.repositories.UserRepository;
+import io.github.mqdev.apicursos.modules.user.UserEntity;
+import io.github.mqdev.apicursos.modules.user.UserRepository;
 
 @Service
 public class CreateUserUseCase {

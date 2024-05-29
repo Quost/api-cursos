@@ -36,9 +36,6 @@ public class ApiCursosApplication {
 			String jwtSecret = dotenv.get("JWT_SECRET");
 			String jwtIssuer = dotenv.get("JWT_ISSUER");
 
-			System.out.println("DATABASE_URL: " + databaseUrl);
-			System.out.println("DATABASE_USERNAME: " + databaseUsername);
-
 			System.setProperty("spring.datasource.url", databaseUrl);
 			System.setProperty("spring.datasource.username", databaseUsername);
 			System.setProperty("spring.datasource.password", databasePassword);

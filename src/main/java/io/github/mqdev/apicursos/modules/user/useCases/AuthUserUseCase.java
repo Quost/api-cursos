@@ -2,8 +2,8 @@ package io.github.mqdev.apicursos.modules.user.useCases;
 
 import org.springframework.stereotype.Service;
 
+import io.github.mqdev.apicursos.modules.user.UserRepository;
 import io.github.mqdev.apicursos.modules.user.dto.AuthUserResponseDTO;
-import io.github.mqdev.apicursos.modules.user.repositories.UserRepository;
 
 import java.time.Instant;
 import java.time.Duration;

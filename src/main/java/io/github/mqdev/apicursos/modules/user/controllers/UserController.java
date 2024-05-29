@@ -4,13 +4,14 @@ import java.util.Base64;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.github.mqdev.apicursos.modules.user.entities.UserEntity;
+import io.github.mqdev.apicursos.modules.user.UserEntity;
 import io.github.mqdev.apicursos.modules.user.useCases.AuthUserUseCase;
 import io.github.mqdev.apicursos.modules.user.useCases.CreateUserUseCase;
 import jakarta.validation.Valid;
@@ -27,17 +28,17 @@ public class UserController {
 
     @PostMapping("/")
     public ResponseEntity<Object> create(@Valid @RequestBody UserEntity userEntity) {
-        try{
+        try {
             var user = createUserUseCase.execute(userEntity);
             return ResponseEntity.ok(user);
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(e.getMessage());
-        
         }
     }
 
     // o username e password são passados como basic auth no post
-    @PostMapping("/login")
+    @GetMapping("/login")
     public ResponseEntity<Object> login(@RequestHeader("Authorization") String authorization) {
         try {
             var base64Credentials = authorization.substring("Basic".length()).trim();
@@ -50,5 +51,5 @@ public class UserController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-    
+
 }
