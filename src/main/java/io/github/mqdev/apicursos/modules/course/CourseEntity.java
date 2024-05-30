@@ -42,16 +42,20 @@ public class CourseEntity {
     @Enumerated(EnumType.STRING)
     private CourseStatusEnum active = CourseStatusEnum.ACTIVE;
 
+    @NotBlank(message = "Teacher is required")
+    private String teacher;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public CourseEntity(String name, CourseCategoryEnum category, CourseStatusEnum status) {
+    public CourseEntity(String name, CourseCategoryEnum category, CourseStatusEnum status, String teacher) {
         this.name = name;
         this.category = category;
         this.active = status;
+        this.teacher = teacher;
     }
 
     public static CourseEntity fromDTO(CourseRequestDTO courseRequestDTO) {
@@ -66,7 +70,7 @@ public class CourseEntity {
 
         statusEnum = CourseStatusEnum.INACTIVE;
 
-        return new CourseEntity(courseRequestDTO.name(), categoryEnum, statusEnum);
+        return new CourseEntity(courseRequestDTO.name(), categoryEnum, statusEnum, courseRequestDTO.teacher());
     }
 
     public void update(CourseRequestDTO courseRequestDTO) {

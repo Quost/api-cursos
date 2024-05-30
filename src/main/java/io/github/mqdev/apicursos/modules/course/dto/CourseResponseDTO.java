@@ -19,6 +19,7 @@ public class CourseResponseDTO {
     private String name;
     private String category;
     private String status;
+    private String teacher;
 
     public static CourseResponseDTO fromEntity(CourseEntity entity) {
         return CourseResponseDTO.builder()
@@ -26,6 +27,7 @@ public class CourseResponseDTO {
             .name(entity.getName())
             .category(entity.getCategory().name())
             .status(entity.getActive().name())
+            .teacher(entity.getTeacher())
             .build();
     }
 }
