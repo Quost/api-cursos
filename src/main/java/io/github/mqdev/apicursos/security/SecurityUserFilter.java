@@ -28,27 +28,31 @@ public class SecurityUserFilter extends OncePerRequestFilter {
             FilterChain filterChain)
             throws ServletException, IOException {
 
-        String header = request.getHeader("Authorization");
+        if (!(request.getRequestURI().contains("/user/") || request.getRequestURI().contains("/user/login"))) {
 
-        if (header != null) {
-            var token = this.jwtProvider.validateToken(header);
+            String header = request.getHeader("Authorization");
 
-            if (token == null) {
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                return;
+            if (header != null) {
+                var token = this.jwtProvider.validateToken(header);
+
+                if (token == null) {
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    return;
+                }
+
+                request.setAttribute("user_id", token.getSubject());
+                var roles = token.getClaim("roles").asList(String.class);
+
+                var authorities = roles.stream()
+                        .map(role -> new SimpleGrantedAuthority("ROLE_" + role.toString().toUpperCase())).toList();
+
+                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(token.getSubject(),
+                        null,
+                        authorities);
+                
+                SecurityContextHolder.getContext().setAuthentication(auth);
+
             }
-
-            request.setAttribute("user_id", token.getSubject());
-            var roles = token.getClaim("roles").asList(String.class);
-
-            var authorities = roles.stream()
-                    .map(role -> new SimpleGrantedAuthority("ROLE_" + role.toString().toUpperCase())).toList();
-
-            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(token.getSubject(),
-                    null,
-                    authorities);
-            SecurityContextHolder.getContext().setAuthentication(auth);
-
         }
 
         filterChain.doFilter(request, response);
