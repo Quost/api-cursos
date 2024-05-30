@@ -30,27 +30,25 @@ public class SecurityUserFilter extends OncePerRequestFilter {
 
         String header = request.getHeader("Authorization");
 
-        if (request.getRequestURI().startsWith("/candidate")) {
-            if (header != null) {
-                var token = this.jwtProvider.validateToken(header);
+        if (header != null) {
+            var token = this.jwtProvider.validateToken(header);
 
-                if (token == null) {
-                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                    return;
-                }
-
-                request.setAttribute("user_id", token.getSubject());
-                var roles = token.getClaim("roles").asList(String.class);
-
-                var authorities = roles.stream()
-                        .map(role -> new SimpleGrantedAuthority("ROLE_" + role)).toList();
-
-                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(token.getSubject(),
-                        null,
-                        authorities);
-                SecurityContextHolder.getContext().setAuthentication(auth);
-
+            if (token == null) {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                return;
             }
+
+            request.setAttribute("user_id", token.getSubject());
+            var roles = token.getClaim("roles").asList(String.class);
+
+            var authorities = roles.stream()
+                    .map(role -> new SimpleGrantedAuthority("ROLE_" + role.toString().toUpperCase())).toList();
+
+            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(token.getSubject(),
+                    null,
+                    authorities);
+            SecurityContextHolder.getContext().setAuthentication(auth);
+
         }
 
         filterChain.doFilter(request, response);
