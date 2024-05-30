@@ -3,6 +3,7 @@ package io.github.mqdev.apicursos.modules.user.controllers;
 import java.util.Base64;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,7 +38,6 @@ public class UserController {
         }
     }
 
-    // o username e password são passados como basic auth no post
     @GetMapping("/login")
     public ResponseEntity<Object> login(@RequestHeader("Authorization") String authorization) {
         try {
@@ -48,7 +48,7 @@ public class UserController {
             var authUserResponseDTO = authUserUseCase.execute(username, password);
             return ResponseEntity.ok(authUserResponseDTO);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
     }
 
