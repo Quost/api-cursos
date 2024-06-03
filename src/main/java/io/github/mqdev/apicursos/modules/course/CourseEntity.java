@@ -40,7 +40,7 @@ public class CourseEntity {
     private CourseCategoryEnum category;
 
     @Enumerated(EnumType.STRING)
-    private CourseStatusEnum active = CourseStatusEnum.ACTIVE;
+    private CourseStatusEnum active = CourseStatusEnum.Ativo;
 
     @NotBlank(message = "Teacher is required")
     private String teacher;
@@ -58,6 +58,14 @@ public class CourseEntity {
         this.teacher = teacher;
     }
 
+    public void setActive(String status) {
+        this.active = CourseStatusEnum.valueOf(status);
+    }
+
+    private void setActive() {
+        this.active = this.active == CourseStatusEnum.Ativo ? CourseStatusEnum.Inativo : CourseStatusEnum.Ativo;
+    }
+
     public static CourseEntity fromDTO(CourseRequestDTO courseRequestDTO) {
         CourseCategoryEnum categoryEnum = null;
         CourseStatusEnum statusEnum = null;
@@ -68,7 +76,7 @@ public class CourseEntity {
             throw new IllegalArgumentException("Invalid category");
         }
 
-        statusEnum = CourseStatusEnum.INACTIVE;
+        statusEnum = CourseStatusEnum.Inativo;
 
         return new CourseEntity(courseRequestDTO.name(), categoryEnum, statusEnum, courseRequestDTO.teacher());
     }
@@ -90,12 +98,12 @@ public class CourseEntity {
     public void setStatus(String status) {
         if (status != null) {
             try {
-                this.active = CourseStatusEnum.valueOf(status);
+                setActive(status);
             } catch (IllegalArgumentException | NullPointerException e) {
                 throw new IllegalArgumentException("Invalid status");
             }
         } else {
-            this.active = this.active == CourseStatusEnum.ACTIVE ? CourseStatusEnum.INACTIVE : CourseStatusEnum.ACTIVE;
+            setActive();
         }
     }
 }
