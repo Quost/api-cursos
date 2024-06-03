@@ -76,7 +76,11 @@ public class CourseEntity {
             throw new IllegalArgumentException("Invalid category");
         }
 
-        statusEnum = CourseStatusEnum.Inativo;
+        try {
+            statusEnum = CourseStatusEnum.valueOf(courseDTO.getStatus());
+        } catch (IllegalArgumentException | NullPointerException e) {
+            throw new IllegalArgumentException("Invalid status");
+        }
 
         return new CourseEntity(courseDTO.getName(), categoryEnum, statusEnum, courseDTO.getTeacher());
     }
