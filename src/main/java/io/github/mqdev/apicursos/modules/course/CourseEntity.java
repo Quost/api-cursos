@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import io.github.mqdev.apicursos.modules.course.dto.CourseRequestDTO;
+import io.github.mqdev.apicursos.modules.course.dto.CourseDTO;
 import io.github.mqdev.apicursos.modules.course.enums.CourseCategoryEnum;
 import io.github.mqdev.apicursos.modules.course.enums.CourseStatusEnum;
 import lombok.AllArgsConstructor;
@@ -66,29 +66,29 @@ public class CourseEntity {
         this.active = this.active == CourseStatusEnum.Ativo ? CourseStatusEnum.Inativo : CourseStatusEnum.Ativo;
     }
 
-    public static CourseEntity fromDTO(CourseRequestDTO courseRequestDTO) {
+    public static CourseEntity fromDTO(CourseDTO courseDTO) {
         CourseCategoryEnum categoryEnum = null;
         CourseStatusEnum statusEnum = null;
 
         try {
-            categoryEnum = CourseCategoryEnum.valueOf(courseRequestDTO.category());
+            categoryEnum = CourseCategoryEnum.valueOf(courseDTO.getCategory());
         } catch (IllegalArgumentException | NullPointerException e) {
             throw new IllegalArgumentException("Invalid category");
         }
 
         statusEnum = CourseStatusEnum.Inativo;
 
-        return new CourseEntity(courseRequestDTO.name(), categoryEnum, statusEnum, courseRequestDTO.teacher());
+        return new CourseEntity(courseDTO.getName(), categoryEnum, statusEnum, courseDTO.getTeacher());
     }
 
-    public void update(CourseRequestDTO courseRequestDTO) {
-        if (courseRequestDTO.name() != null) {
-            this.name = courseRequestDTO.name();
+    public void update(CourseDTO courseDTO) {
+        if (courseDTO.getName() != null) {
+            this.name = courseDTO.getName();
         }
 
-        if (courseRequestDTO.category() != null) {
+        if (courseDTO.getCategory() != null) {
             try {
-                this.category = CourseCategoryEnum.valueOf(courseRequestDTO.category());
+                this.category = CourseCategoryEnum.valueOf(courseDTO.getCategory());
             } catch (IllegalArgumentException | NullPointerException e) {
                 throw new IllegalArgumentException("Invalid category");
             }

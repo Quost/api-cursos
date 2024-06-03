@@ -13,7 +13,7 @@ import io.github.mqdev.apicursos.modules.course.CourseEntity;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CourseResponseDTO {
+public class CourseDTO {
     
     private UUID id;
     private String name;
@@ -21,8 +21,8 @@ public class CourseResponseDTO {
     private String status;
     private String teacher;
 
-    public static CourseResponseDTO fromEntity(CourseEntity entity) {
-        return CourseResponseDTO.builder()
+    public static CourseDTO fromEntity(CourseEntity entity) {
+        return CourseDTO.builder()
             .id(entity.getId())
             .name(entity.getName())
             .category(entity.getCategory().name())

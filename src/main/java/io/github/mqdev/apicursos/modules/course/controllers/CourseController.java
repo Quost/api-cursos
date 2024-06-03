@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import io.github.mqdev.apicursos.modules.course.dto.CourseRequestDTO;
+import io.github.mqdev.apicursos.modules.course.dto.CourseDTO;
 import io.github.mqdev.apicursos.modules.course.useCases.ChangeCourseStatusUseCase;
 import io.github.mqdev.apicursos.modules.course.useCases.CreateCourseUseCase;
 import io.github.mqdev.apicursos.modules.course.useCases.DeleteCourseUseCase;
@@ -50,7 +50,7 @@ public class CourseController {
 
     @PostMapping
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<Object> createCourse(@Valid @RequestBody CourseRequestDTO course) {
+    public ResponseEntity<Object> createCourse(@Valid @RequestBody CourseDTO course) {
         try {
             var result = this.createCourseUseCase.execute(course);
             return ResponseEntity.ok(result);
@@ -74,7 +74,7 @@ public class CourseController {
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Object> updateCourse(@PathVariable("id") String id,
-            @Valid @RequestBody CourseRequestDTO course) {
+            @Valid @RequestBody CourseDTO course) {
         try {
             var result = this.updateCourseUseCase.execute(id, course);
             return ResponseEntity.ok(result);

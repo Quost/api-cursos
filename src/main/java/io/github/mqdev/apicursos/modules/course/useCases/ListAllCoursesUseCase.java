@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import io.github.mqdev.apicursos.modules.course.CourseEntity;
 import io.github.mqdev.apicursos.modules.course.CourseRepository;
-import io.github.mqdev.apicursos.modules.course.dto.CourseResponseDTO;
+import io.github.mqdev.apicursos.modules.course.dto.CourseDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +17,8 @@ public class ListAllCoursesUseCase {
     private CourseRepository courseRepository;
 
 
-    public List<CourseResponseDTO> execute(String name, String category) {
-        List<CourseResponseDTO> courses = new ArrayList<>(); 
+    public List<CourseDTO> execute(String name, String category) {
+        List<CourseDTO> courses = new ArrayList<>(); 
 
         if (name != null){
             List<CourseEntity> coursesFilteredByName = new ArrayList<>();
@@ -27,23 +27,23 @@ public class ListAllCoursesUseCase {
             if (category != null){
                 coursesFilteredByName.forEach(course -> {
                     if (course.getCategory().name().contains(category)){
-                        courses.add(CourseResponseDTO.fromEntity(course));
+                        courses.add(CourseDTO.fromEntity(course));
                     }
                 });
             } else {
                 coursesFilteredByName.forEach(course -> {
-                    courses.add(CourseResponseDTO.fromEntity(course));
+                    courses.add(CourseDTO.fromEntity(course));
                 });
             }
         } else if (category != null){
             this.courseRepository.findAll().forEach(course -> {
                 if (course.getCategory().name().contains(category)){
-                    courses.add(CourseResponseDTO.fromEntity(course));
+                    courses.add(CourseDTO.fromEntity(course));
                 }
             });
         } else {
             this.courseRepository.findAll().forEach(course -> {
-                courses.add(CourseResponseDTO.fromEntity(course));
+                courses.add(CourseDTO.fromEntity(course));
             });
         }
 
